@@ -58,3 +58,18 @@ docker volume inspect vol1 //gives the info about created volume vol1
 docker  volume rm vol1 //remove the volume
 docker volume prune //remove all unused volumes
 docker run --name MyJenkins1 -v vol1:/var/jenkins_home-p 8080:8080 -p 50000:50000  jenkins //running jenkins on my volume vol1
+
+#docker command to create image for springboot project
+
+FROM openjdk:8
+EXPOSE 8080
+ADD target/spring-boot-docker.war spring-boot-docker.war
+ENTRYPOINT ["java","-jar","/spring-boot-docker.war"]
+
+docker build -t spring-boot-docker.war . //name of the war file  '.' represents current location building docker image
+
+docker run -p 9090:8080 spring-boot-docker.war //running the image
+
+http://192.168.99.100:8080/welcome
+
+after dockerizing the image we need to run with port at the start of docker terminal what we configured not localhost in my case it is 192.168.99.100
