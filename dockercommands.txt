@@ -47,3 +47,14 @@ docker-compose config  //checks the yml file configuration
 docker-compose ps //checks ALL the services
 docker-compose down //stop service
 docker-compose ps up -d  //start service
+
+
+#docker volume commands
+
+docker volume //gives info of all available commands
+docker volume create vol1 //creates volume with name vol1
+docker volume ls //list volumes 
+docker volume inspect vol1 //gives the info about created volume vol1
+docker  volume rm vol1 //remove the volume
+docker volume prune //remove all unused volumes
+docker run --name MyJenkins1 -v vol1:/var/jenkins_home-p 8080:8080 -p 50000:50000  jenkins //running jenkins on my volume vol1

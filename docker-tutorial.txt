@@ -11,6 +11,7 @@ https://www.youtube.com/watch?v=iN3he0eVUyw&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp
 https://www.youtube.com/watch?v=LQjaJINkQXY&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=12
 https://www.youtube.com/watch?v=HUpIoF_conA&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=13
 https://www.youtube.com/watch?v=VOK06Q4QqvE&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=14
+https://www.youtube.com/watch?v=bU2NNFJ-UXA&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=15
 
 docker build an image
 
