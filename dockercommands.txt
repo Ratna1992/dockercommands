@@ -61,6 +61,8 @@ docker run --name MyJenkins1 -v vol1:/var/jenkins_home-p 8080:8080 -p 50000:5000
 
 #docker command to create image for springboot project
 
+create the dockerfile with name Dockerfile no extension in root directory of project
+
 FROM openjdk:8
 EXPOSE 8080
 ADD target/spring-boot-docker.war spring-boot-docker.war
@@ -73,3 +75,17 @@ docker run -p 9090:8080 spring-boot-docker.war //running the image
 http://192.168.99.100:8080/welcome
 
 after dockerizing the image we need to run with port at the start of docker terminal what we configured not localhost in my case it is 192.168.99.100
+
+#pushing the docker to docker hub
+
+step1 : Tag 
+we need to specify a tag to push the docker into docker hub below command shows how to add a tag to my account docker id 8499899121 to our docker image spring-boot-docker.war
+
+docker tag spring-boot-docker.war 8499899121/spring-boot-docker.war
+
+in case to rename the tag use following command
+docker tag ratna1992/spring-boot-docker.war 8499899121/spring-boot-docker.war
+
+step2 : push the tag to docker hub
+
+docker push 8499899121/spring-boot-docker.war
