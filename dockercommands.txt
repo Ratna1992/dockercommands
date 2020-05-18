@@ -1,0 +1,49 @@
+#docker basic commands
+
+docker -v  //check version
+docker --version //same as above
+docker version //give version sa well as server info
+docker info
+docker --help
+docker login
+
+
+#container commands
+
+docker rm id //removes the container
+docker start //start container
+docker stop  //stop container
+docker pause //stop container
+docker unpause //restart container
+docker top //
+docker stats // stats of container
+docker attach //
+docker kill //
+docker ps //shows active container
+docker ps -all //shows all containers
+
+#image commands
+
+docker build -t textfileimage:1.0 .
+docker run image //run the created image
+docker images --help
+docker pull image
+docker images -q //lists images 
+docker images -f "dangling=false" -q
+docker rmi image //remove image
+docker rmi -f image //forec remove image
+docker inspect image //gives metadata
+docker system prune  //remove all the images
+docke run -it ubuntu //runs an image
+docker rmi -f ubuntu //force delete the images
+
+
+#docker-compose commands
+
+docker-compose -version
+docker-compose -v
+docker-compose version
+docker-compose config  //checks the yml file configuration
+docker-compose ps //checks ALL the services
+docker-compose down //stop service
+docker-compose ps up -d  //start service
