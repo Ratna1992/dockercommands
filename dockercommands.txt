@@ -7,7 +7,7 @@ docker info
 docker --help
 docker login
 
-
+-----------------------------------------------------------------------------------------------------------------------------------
 #container commands
 
 docker rm id //removes the container
@@ -21,6 +21,8 @@ docker attach //
 docker kill //
 docker ps //shows active container
 docker ps -all //shows all containers
+
+-----------------------------------------------------------------------------------------------------------------------------------
 
 #image commands
 
@@ -37,6 +39,7 @@ docker system prune  //remove all the images
 docke run -it ubuntu //runs an image
 docker rmi -f ubuntu //force delete the images
 
+-----------------------------------------------------------------------------------------------------------------------------------
 
 #docker-compose commands
 
@@ -48,7 +51,7 @@ docker-compose ps //checks ALL the services
 docker-compose down //stop service
 docker-compose ps up -d  //start service
 
-
+-----------------------------------------------------------------------------------------------------------------------------------
 #docker volume commands
 
 docker volume //gives info of all available commands
@@ -58,6 +61,130 @@ docker volume inspect vol1 //gives the info about created volume vol1
 docker  volume rm vol1 //remove the volume
 docker volume prune //remove all unused volumes
 docker run --name MyJenkins1 -v vol1:/var/jenkins_home-p 8080:8080 -p 50000:50000  jenkins //running jenkins on my volume vol1
+
+-----------------------------------------------------------------------------------------------------------------------------------
+#docker swarm
+
+
+A swarm is a group of machines that are running docker and joined into a cluster
+
+Docker Swarm is a tool for Container Orchestration
+
+Let's take a small example 
+
+you have 100 containers
+
+maintaining all containers is tedious job
+
+
+Orchestration managing and controlling multiple docker containers as a single service
+
+Tools available Docker Swarm,Kubernates,Apache Mesos
+
+
+Step 1:
+
+create Docker machines (to act as nodes for Docker Swarm)
+Create one machine as manager and others as workers
+
+enter docker-machine -v to check docker-machine is installed or not 
+
+create docker machine
+
+cmd1)docker-machine create --driver virtualbox manager1
+
+cmd2)docker-machine env manager1
+ 
+command2  after command1
+
+C:\Users\RATNA>docker-machine env manager1
+SET DOCKER_TLS_VERIFY=1
+SET DOCKER_HOST=tcp://192.168.99.101:2376
+SET DOCKER_CERT_PATH=C:\Users\RATNA\.docker\machine\machines\manager1
+SET DOCKER_MACHINE_NAME=manager1
+SET COMPOSE_CONVERT_WINDOWS_PATHS=true
+REM Run this command to configure your shell:
+REM     @FOR /f "tokens=*" %i IN ('docker-machine env manager1') DO @%i
+
+
+Step 2:check machine created successfully
+docker-machine ls
+
+docker-machine ip manager1
+
+Step 3:create docker workers
+
+docker-machine create --driver virtualbox worker1
+docker-machine create --driver virtualbox worker2
+docker-machine restart manager1 if stopped use it 
+docker-machine env manager1 to link if stopped
+
+Step 4:connect  ssh to docker machine/start machine
+
+docker-machine ssh manager1
+docker-machine ssh worker1
+docker-machine ssh worker2
+
+Step 5:Initialize Docker Swarm
+Run the following command on docker-machine manager terminal
+docker swarm init --advertise-addr tcp://192.168.99.101.2376
+
+to check use command docker node ls  will work only on manager 
+
+Step 6:To join the node as a worker in the swarm 
+docker swarm join-token worker1 
+
+
+and run it on manager and it will give one command and run it on worker 
+
+docker swarm join --token SWMTKN-1-087e5ic9oflc575hexkr8qv81lgazhraxmu7d027325yeejdnt-6gvi7amzhbnnmfdtmt9dpkwvp 192.168.99.100:2377
+
+when worker is joined it will give a message "This node joined a swarm as a worker."
+Enter the following command on manager
+docker node ls
+
+Step7:we can run all the standard commands on manager 
+docker info
+docker swarm
+
+step 8:Run containers on Docker Swarm
+run command in manager
+docker service create --replicas 2 -p 80:80 --name web1 nginx
+
+we have two nodes manager1 and worker1
+
+to check the status of service
+docker service ls
+docker service ps web1
+
+web1 is our custom service name
+
+Step9:
+Scale up using swarm
+
+nginix service is running on all the two nodes on ports http://192.168.99.101/ http://192.168.99.100/
+docker service scale web1=4 as it is running on two we are making it two run in four 
+we can insepect any node if we are working on manager 
+
+docker node inspect worker1
+
+step 10:update service
+
+to update the image 
+docker service update --image nginx:1.14.0 web1
+
+Step 11: Remove service
+
+docker service rm serviceName
+to leave the node from swarm
+docker swarm leave 
+to stop the machine
+docker-machine stop machinename
+
+to remove machine 
+docker-machine rm machinename
+-----------------------------------------------------------------------------------------------------------------------------------
+
 
 #docker command to create image for springboot project
 
@@ -89,3 +216,9 @@ docker tag ratna1992/spring-boot-docker.war 8499899121/spring-boot-docker.war
 step2 : push the tag to docker hub
 
 docker push 8499899121/spring-boot-docker.war
+
+# jenkins
+docker run -p 9090:8080 -p 50000:50000 jenkins
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
